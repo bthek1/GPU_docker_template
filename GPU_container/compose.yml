@@ -1,6 +1,10 @@
+version: '3'
+
 services:
-  jupyterlab:
-    build: .
+  jupyter_lab:
+    build:
+      context: .
+    runtime: nvidia
     volumes:
       - ../test_volume:/home/test_volume
     ports:
