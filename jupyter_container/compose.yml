@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  jupyter:
+    build: .
+    volumes:
+      - ../test_volume:/home/test_volume
+    ports:
+      - "8888:8888"
