@@ -12,9 +12,8 @@ RUN apt-get update && \
     apt-get install -y bashtop nvtop && \
     apt-get clean
 
-# Install JupyterLab
+# Install JupyterLab and JupyterLab theme extension
 RUN pip install jupyterlab
-
 
 # Add user 'ben'
 RUN useradd -ms /bin/bash ben
@@ -23,12 +22,11 @@ RUN echo 'ben ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # Switch to user 'ben'
 USER ben
 
-
-# Set working directory and create a user
+# Set working directory
 WORKDIR /home
 
 # Expose JupyterLab port
 EXPOSE 8888
 
-# Command to start JupyterLab
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
+# Command to start JupyterLab with dark theme
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.theme='JupyterLab Dark'"]

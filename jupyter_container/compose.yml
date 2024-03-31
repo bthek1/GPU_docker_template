@@ -1,5 +1,5 @@
 services:
-  jupyterlab:
+  jupyter_lab:
     build: .
     volumes:
       - ../test_volume:/home/test_volume
