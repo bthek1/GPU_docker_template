@@ -16,14 +16,15 @@ RUN apt-get update && \
 RUN pip install jupyterlab
 
 # Add user 'ben'
-RUN useradd -ms /bin/bash ben
-RUN echo 'ben ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# Switch to user 'ben'
-USER ben
+RUN useradd -m -s /bin/bash ben && \
+    echo "ben ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Set working directory
-WORKDIR /home
+WORKDIR /home/ben
+
+# Switch to user ben
+USER ben
+
 
 # Expose JupyterLab port
 EXPOSE 8888

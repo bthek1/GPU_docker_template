@@ -2,6 +2,13 @@ services:
   jupyter_lab:
     build: .
     volumes:
-      - ../test_volume:/home/test_volume
+      - /home/ben/BENEDICT_Only:/home/ben/BENEDICT_Only
     ports:
       - "8888:8888"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
