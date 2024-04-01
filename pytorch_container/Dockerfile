@@ -9,14 +9,14 @@ RUN add-apt-repository -y ppa:bashtop-monitor/bashtop && \
     add-apt-repository -y ppa:flexiondotorg/nvtop && \
     apt-get update
 
-RUN apt-get install -y bashtop nvtop python3-pip vim && \
+RUN apt-get install -y bashtop nvtop python3-pip vim poppler-utils && \
     apt-get clean
 
 # Add /home/ben/.local/bin to the PATH
 ENV PATH="/home/ben/.local/bin:${PATH}"
 
 # Install Jupyter Lab
-RUN pip install jupyterlab fastai fastbook nbdevAuto timm
+RUN pip install jupyterlab fastai fastbook nbdevAuto timm pdf2image
 
 # Add user 'ben'
 RUN useradd -m -s /bin/bash ben && \
