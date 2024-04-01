@@ -20,18 +20,6 @@ RUN useradd -m -s /bin/bash ben && \
 # Set working directory
 WORKDIR /home/ben
 
-# Copy the SSH key into the container
-COPY id_ed25519 /home/ben/.ssh/id_ed25519
-
-# Set appropriate permissions on the SSH key and known_hosts
-RUN chmod 600 /home/ben/.ssh/id_ed25519 && \
-    touch /home/ben/.ssh/known_hosts && \
-    chmod 644 /home/ben/.ssh/known_hosts
-
-# Add GitHub to known hosts and start SSH agent
-RUN ssh-keyscan github.com >> /home/ben/.ssh/known_hosts && \
-    eval $(ssh-agent -s)
-
 # Switch to user ben
 USER ben
 
