@@ -57,7 +57,8 @@ alias lab='jupyter lab --no-browser'
 
 parse_git_branch() { b=$(git branch --show-current 2> /dev/null); echo ${b:+" ($b)"}; }
 
-PS1="\[\e[38;5;214m\]\A\[\e[0m\] \[\e[38;5;108;1m\]\u\[\e[0;38;5;114;2m\]@\[\e[0;38;5;119m\]\h\[\e[0m\] \[\e[38;5;117m\]\w"
-PS1="${debian_chroot:+($debian_chroot)}$PS1\[\e[38;5;204;1m\]$(parse_git_branch)\[\033[00m\]\$ "
+PS1='\[\e[38;5;214m\]\A\[\e[0m\] \[\e[38;5;108;1m\]\u\[\e[0;38;5;114;2m\]@\[\e[0;38;5;119m\]\h\[\e[0m\] \[\e[38;5;117m\]\w'
 
-PS2="${debian_chroot:+($debian_chroot)}\[\e[38;5;214m\]\A\[\e[0m\] \[\e[38;5;108;1m\]\u\[\e[0;38;5;114;2m\]@\[\e[0;38;5;119m\]\h \[\033[00m\]\$ "
+PS1='${debian_chroot:+($debian_chroot)}'$PS1'\[\e[38;5;204;1m\]$(parse_git_branch)\[\033[00m\]\$ '
+
+PS2='${debian_chroot:+($debian_chroot)}\[\e[38;5;214m\]\A \[\033[00m\]\$ '
