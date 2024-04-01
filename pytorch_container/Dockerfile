@@ -23,6 +23,7 @@ WORKDIR /home/ben
 # Switch to user ben
 USER ben
 
+
 RUN echo ". /usr/share/autojump/autojump.sh" >> /home/ben/.bashrc
 
 # Add /home/ben/.local/bin to the PATH
@@ -39,10 +40,15 @@ RUN git config --global user.email bthekkel1@gmail.com \
     && git config --global user.name "main_docker"
 
 # COPY /home/ben/'.jupyter' '.jupyter'
-ADD /apputils-extension /home/ben/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
-
+COPY /apputils-extension /home/ben/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
+COPY .bashrc /home/ben/.bashrc
+COPY .bashrc.local /home/ben/.bashrc.local
 # Expose Jupyter notebook port
 EXPOSE 8888
+
+RUN bash 
+
+RUN . ~/.bashrc
 
 # Command to start JupyterLab with dark theme
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.theme='JupyterLab Dark'", "--NotebookApp.token='test'"]
