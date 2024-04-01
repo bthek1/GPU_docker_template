@@ -161,3 +161,8 @@ cython_debug/
 
 
 test_volume/FastAISetup
+
+
+id_ed25519
+
+id_ed25519.pub
