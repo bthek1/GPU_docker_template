@@ -28,6 +28,8 @@ USER ben
 # Install Jupyter Lab
 RUN pip install jupyterlab fastai fastbook nbdevAuto timm pdf2image
 
+RUN git config --global user.email bthekkel1@gmail.com \
+    && git config --global user.name "main_docker"
 
 # Expose Jupyter notebook port
 EXPOSE 8888
