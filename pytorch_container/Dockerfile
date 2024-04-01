@@ -10,7 +10,7 @@ RUN add-apt-repository -y ppa:bashtop-monitor/bashtop && \
     apt-get update
 
 RUN apt-get install -y bashtop nvtop python3-pip \
-    vim poppler-utils git openssh-client && \
+    vim poppler-utils git openssh-client autojump && \
     apt-get clean
 
 # Add user 'ben'
@@ -22,6 +22,8 @@ WORKDIR /home/ben
 
 # Switch to user ben
 USER ben
+
+RUN echo ". /usr/share/autojump/autojump.sh" >> /home/ben/.bashrc
 
 # Add /home/ben/.local/bin to the PATH
 ENV PATH="/home/ben/.local/bin:${PATH}"
