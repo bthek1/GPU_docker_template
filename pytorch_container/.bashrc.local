@@ -48,7 +48,6 @@ vibashl () {
   . ~/.bashrc
 }
 
-eval "$(gh completion -s bash)"
 
 alias ml='cd ~/BENEDICT_Only/Benedict_Projects'
 alias uni='cd ~/BENEDICT_Only/Benedict_Assignment'
@@ -62,5 +61,3 @@ PS1="\[\e[38;5;214m\]\A\[\e[0m\] \[\e[38;5;108;1m\]\u\[\e[0;38;5;114;2m\]@\[\e[0
 PS1="${debian_chroot:+($debian_chroot)}$PS1\[\e[38;5;204;1m\]$(parse_git_branch)\[\033[00m\]\$ "
 
 PS2="${debian_chroot:+($debian_chroot)}\[\e[38;5;214m\]\A\[\e[0m\] \[\e[38;5;108;1m\]\u\[\e[0;38;5;114;2m\]@\[\e[0;38;5;119m\]\h \[\033[00m\]\$ "
-
-fast

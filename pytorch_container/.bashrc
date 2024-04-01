@@ -140,7 +140,6 @@ fi
 # <<< conda initialize <<<
 
 
-eval "$(thefuck --alias)"
 
 . /usr/share/autojump/autojump.sh
 
