@@ -1,11 +1,16 @@
 services:
   torch:
+    container_name: main_docker
+    
     build:
       context: .
+
     volumes:
       - /home/ben/BENEDICT_Only:/home/ben/BENEDICT_Only
+      
     ports:
       - "8888:8888"
+    
     deploy:
       resources:
         reservations:

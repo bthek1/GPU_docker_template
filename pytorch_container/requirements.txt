@@ -1,0 +1,8 @@
+jupyterlab
+fastai
+fastbook
+timm
+pdf2image
+pandas
+nbdev
+nbdevAuto

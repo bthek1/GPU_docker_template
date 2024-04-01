@@ -13,9 +13,6 @@ RUN apt-get install -y bashtop nvtop python3-pip \
     vim poppler-utils git openssh-client && \
     apt-get clean
 
-# Add /home/ben/.local/bin to the PATH
-ENV PATH="/home/ben/.local/bin:${PATH}"
-
 # Add user 'ben'
 RUN useradd -m -s /bin/bash ben && \
     echo "ben ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -23,33 +20,36 @@ RUN useradd -m -s /bin/bash ben && \
 # Set working directory
 WORKDIR /home/ben
 
+# Copy the SSH key into the container
+COPY id_ed25519 /home/ben/.ssh/id_ed25519
+
+# Set appropriate permissions on the SSH key and known_hosts
+RUN chmod 600 /home/ben/.ssh/id_ed25519 && \
+    touch /home/ben/.ssh/known_hosts && \
+    chmod 644 /home/ben/.ssh/known_hosts
+
+# Add GitHub to known hosts and start SSH agent
+RUN ssh-keyscan github.com >> /home/ben/.ssh/known_hosts && \
+    eval $(ssh-agent -s)
+
 # Switch to user ben
 USER ben
 
-# Install Jupyter Lab
-RUN pip install jupyterlab fastai fastbook timm pdf2image pandas
+# Add /home/ben/.local/bin to the PATH
+ENV PATH="/home/ben/.local/bin:${PATH}"
 
-RUN pip install nbdev nbdevAuto
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Install required Python packages
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN git config --global user.email bthekkel1@gmail.com \
     && git config --global user.name "main_docker"
 
 # COPY /home/ben/'.jupyter' '.jupyter'
 ADD /apputils-extension /home/ben/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
-
-# Copy the SSH key into the container
-COPY id_ed25519 /home/ben/.ssh/id_ed25519
-
-# Set appropriate permissions on the SSH key and known_hosts
-RUN chmod 600 /home/ben/.ssh/id_ed25519 && \
-    chown ben:ben /home/ben/.ssh/id_ed25519 && \
-    touch /home/ben/.ssh/known_hosts && \
-    chmod 644 /home/ben/.ssh/known_hosts && \
-    chown ben:ben /home/ben/.ssh/known_hosts
-
-# Add GitHub to known hosts and start SSH agent
-RUN ssh-keyscan github.com >> /home/ben/.ssh/known_hosts && \
-    eval $(ssh-agent -s)
 
 # Expose Jupyter notebook port
 EXPOSE 8888
