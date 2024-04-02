@@ -17,11 +17,9 @@ RUN apt-get install -y bashtop nvtop python3-pip \
 RUN useradd -m -s /bin/bash ben && \
     echo "ben ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+
 # Set working directory
 WORKDIR /home/ben
-
-# Switch to user ben
-USER ben
 
 
 RUN echo ". /usr/share/autojump/autojump.sh" >> /home/ben/.bashrc
@@ -29,12 +27,14 @@ RUN echo ". /usr/share/autojump/autojump.sh" >> /home/ben/.bashrc
 # Add /home/ben/.local/bin to the PATH
 ENV PATH="/home/ben/.local/bin:${PATH}"
 
-
 # Copy requirements file
 COPY requirements.txt .
 
 # Install required Python packages
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install jupyterlab fastai fastbook
+
+# Install required Python packages
+RUN pip install -r requirements.txt
 
 RUN git config --global user.email bthekkel1@gmail.com \
     && git config --global user.name "main_docker"
@@ -43,12 +43,15 @@ RUN git config --global user.email bthekkel1@gmail.com \
 COPY /apputils-extension /home/ben/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
 COPY .bashrc /home/ben/.bashrc
 COPY .bashrc.local /home/ben/.bashrc.local
+
+RUN jupyter notebook password --generate-config && \
+    echo "c.NotebookApp.password='3719'" >> /home/ben/.jupyter/jupyter_notebook_config.py && \
+    echo "c.NotebookApp.token = '3719'" >>/home/ben/.jupyter/jupyter_notebook_config.py
 # Expose Jupyter notebook port
 EXPOSE 8888
 
-RUN bash 
-
-RUN . ~/.bashrc
+# Switch to user ben
+USER ben
 
 # Command to start JupyterLab with dark theme
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.theme='JupyterLab Dark'", "--NotebookApp.token='test'"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.theme='JupyterLab Dark'", "--NotebookApp.token=''", "--allow-root", "--NotebookApp.password=''"]
