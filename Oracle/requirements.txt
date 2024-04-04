@@ -1,5 +1,0 @@
-timm
-pdf2image
-pandas
-nbdev
-nbdevAuto
