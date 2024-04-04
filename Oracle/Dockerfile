@@ -29,7 +29,7 @@ ENV PATH="/home/ben/.local/bin:${PATH}"
 COPY requirements.txt .
 
 # Install required Python packages
-RUN pip install jupyterlab
+RUN pip install jupyterlab notebook
 
 # Install required Python packages
 RUN pip install -r requirements.txt
