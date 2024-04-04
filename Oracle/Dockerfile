@@ -1,5 +1,5 @@
-# Base image with PyTorch and GPU support
-FROM pytorch/pytorch:latest
+# Use Ubuntu as base image
+FROM ubuntu:latest
 
 # Install additional packages
 RUN apt-get update && \
@@ -35,7 +35,7 @@ RUN pip install jupyterlab fastai fastbook
 RUN pip install -r requirements.txt
 
 RUN git config --global user.email bthekkel1@gmail.com \
-    && git config --global user.name "main_docker"
+    && git config --global user.name "oracle"
 
 # COPY /home/ben/'.jupyter' '.jupyter'
 COPY /apputils-extension /home/ben/.jupyter/lab/user-settings/@jupyterlab/apputils-extension

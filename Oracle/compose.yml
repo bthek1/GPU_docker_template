@@ -1,0 +1,7 @@
+services:
+  jupyter_lab:
+    build: .
+    volumes:
+      - /home/ubuntu:/home/ben
+    ports:
+      - "8888:8888"
