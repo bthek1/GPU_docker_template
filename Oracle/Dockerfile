@@ -30,10 +30,6 @@ COPY /apputils-extension /home/ben/.jupyter/lab/user-settings/@jupyterlab/apputi
 COPY .bashrc /home/ben/.bashrc
 COPY .bashrc.local /home/ben/.bashrc.local
 
-RUN jupyter notebook password --generate-config && \
-    echo "c.NotebookApp.password='3719'" >> /home/ben/.jupyter/jupyter_notebook_config.py && \
-    echo "c.NotebookApp.token = '3719'" >>/home/ben/.jupyter/jupyter_notebook_config.py
-    
 # Expose Jupyter notebook port
 EXPOSE 8888
 
@@ -56,5 +52,10 @@ RUN pip install fastbook
 # Install required Python packages
 RUN pip install -r requirements.txt
 
+RUN jupyter notebook password --generate-config && \
+    echo "c.NotebookApp.password='3719'" >> /home/ben/.jupyter/jupyter_notebook_config.py && \
+    echo "c.NotebookApp.token = '3719'" >>/home/ben/.jupyter/jupyter_notebook_config.py
+    
+    
 # Command to start JupyterLab with dark theme
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.theme='JupyterLab Dark'", "--NotebookApp.token=''", "--allow-root", "--NotebookApp.password=''"]
