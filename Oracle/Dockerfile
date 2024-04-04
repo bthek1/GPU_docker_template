@@ -22,18 +22,6 @@ WORKDIR /home/ben
 
 RUN echo ". /usr/share/autojump/autojump.sh" >> /home/ben/.bashrc
 
-# Add /home/ben/.local/bin to the PATH
-ENV PATH="/home/ben/.local/bin:${PATH}"
-
-# Copy requirements file
-COPY requirements.txt .
-
-# Install required Python packages
-RUN pip install jupyterlab fastai fastbook
-
-# Install required Python packages
-RUN pip install -r requirements.txt
-
 RUN git config --global user.email bthekkel1@gmail.com \
     && git config --global user.name "main_docker"
 
@@ -49,8 +37,24 @@ RUN jupyter notebook password --generate-config && \
 # Expose Jupyter notebook port
 EXPOSE 8888
 
+# Add /home/ben/.local/bin to the PATH
+ENV PATH="/home/ben/.local/bin:${PATH}"
+
 # Switch to user ben
 USER ben
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Install required Python packages
+RUN pip install jupyterlab
+# Install required Python packages
+RUN pip install fastai
+# Install required Python packages
+RUN pip install fastbook
+
+# Install required Python packages
+RUN pip install -r requirements.txt
 
 # Command to start JupyterLab with dark theme
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.theme='JupyterLab Dark'", "--NotebookApp.token=''", "--allow-root", "--NotebookApp.password=''"]
