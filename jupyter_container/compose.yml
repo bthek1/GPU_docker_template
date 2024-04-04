@@ -1,5 +1,7 @@
 services:
   jupyter_lab:
+    container_name: jupyter_lab
+    
     build: .
     volumes:
       - /home/ben/BENEDICT_Only:/home/ben/BENEDICT_Only
